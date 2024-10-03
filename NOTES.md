@@ -108,7 +108,7 @@ test_python_mm[A2-B2-R2]     468.5704 (26.99)    471.1164 (20.98)    470.0863 (2
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ```
 
-These are three tests benchmarking the simple matrix multiplacation python function. 
+These are three tests benchmarking the simple matrix multiplication python function. 
 The functions only differ in the size of the input matrices. 10x10, 20x20 and 30x30. Some simple curve fitting reveals that the function has approx. **O(n^3)** time complexity where **n** is the size of **one side** of the matrix. This makes perfect sense when we look at the code for 
 the function in question: 
 

@@ -41,7 +41,6 @@ def test_python_mm(benchmark, profiled, A, B, R):
     with profiled():
         def bench():
             return multiply_matrix_python(A, B)
-
         result = benchmark(bench)
 
     nptest.assert_allclose(result, R)
