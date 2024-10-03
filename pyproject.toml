@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "iiasa-performance-engineering"
+version = "0.1.0"
+description = ""
+authors = ["Max Wolschlager <rxtx@ungut.at>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pytest = "^8.3.3"
+polars = "^1.8.2"
+snakeviz = "^2.2.0"
+pytest-benchmark = "^4.0.0"
+numpy = "^2.1.1"
+ruff = "^0.6.8"
+pandas = "^2.2.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
