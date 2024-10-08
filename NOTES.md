@@ -1,14 +1,40 @@
-# Performance Engineering #1 
+# Performance Engineering #1 - The basics
+
 Very basic high-level performance engineering talk.
 
 When we are “Optimizing Performance” what are we optimizing For? 
+
 We can set 
-- Concurrency 
+
 - Throughput 
-- Latency 
 - Memory Usage 
+- Concurrency 
+- Latency 
 - Persistent Storage  
 - Predictablity
+
+as targets and optimize toward the others. Very often there are trade-offs we have to consider.
+These are real-world coniderations, economical or scientific in nature.
+For example: More RAM is often cheaper than a better CPU.
+
+Moreover scaling CPUs is harder than scaling RAM, hence "caching" is very prevalent.
+It might become impossible to increase CPU clock speeds so we have to start computing
+in parallel - and that might not be possible at all.
+
+## throttling
+
+Semiconductors will increase in conductivity and eventually burn out, the hotter they get.
+This means all long-running semi-conducting devices need some sort of negative feedback 
+with every increase in temperature. Thermal throttling.
+Usually this is accomplished via low-level firmware coupled with at least one temperature
+sensor within the device assembly. On mobile devices like laptops throttling might 
+also occur with the decrease of battery voltage and charge. 
+
+Consider this plot of a sorting-algorithm benchmark.
+![TT](/assets/thermalt.png)
+
+This image is taken from an MIT Courseware Lecture.
+License: https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
 
 ## measuring the interpreter/linker/vm-startup etc.
 Its tempting to write or compile a program and benchmark it directly from your shell:
@@ -88,6 +114,8 @@ test_python_too_fast     216.3560  216.3560  216.3560  0.0000  216.3560  0.0000 
 ```
 
 As you can see there are outliers that are close to 100% slower than the average runtime otherwise.
+Even worse: if you are not an expert on the scheduling algorithm of your operating system 
+it is basically impossible to know or measure how big or how frequent the error will be.
 To fix this, most benchmarking libraries will automatically run benchmarks multiple times and 
 present statistics of the result.
 
@@ -109,8 +137,10 @@ test_python_mm[A2-B2-R2]     468.5704 (26.99)    471.1164 (20.98)    470.0863 (2
 ```
 
 These are three tests benchmarking the simple matrix multiplication python function. 
-The functions only differ in the size of the input matrices. 10x10, 20x20 and 30x30. Some simple curve fitting reveals that the function has approx. **O(n^3)** time complexity where **n** is the size of **one side** of the matrix. This makes perfect sense when we look at the code for 
-the function in question: 
+The functions only differ in the size of the input matrices. 10x10, 20x20 and 30x30. 
+Some simple curve fitting reveals that the function has approx. 
+**O(n^3)** time complexity where **n** is the size of **one side** of the matrix. 
+This makes perfect sense when we look at the code for the function in question: 
 
 ```py
 def multiply_matrix_python(A: npt.NDArray, B: npt.NDArray):
