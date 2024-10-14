@@ -14,6 +14,10 @@ pytest-benchmark = "^4.0.0"
 numpy = "^2.1.1"
 ruff = "^0.6.8"
 pandas = "^2.2.3"
+gprof2dot = "^2024.6.6"
+matplotlib = "^3.9.2"
+memray = "^1.14.0"
+pytest-memray = "^1.7.0"
 
 
 [build-system]
