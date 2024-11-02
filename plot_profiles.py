@@ -1,9 +1,15 @@
 import matplotlib.pyplot as plt 
+import matplotlib as mpl
 import glob
 import cProfile
 import pstats
 import sys
 import re
+import mpl_ascii
+
+mpl_ascii.AXES_WIDTH=100
+mpl_ascii.AXES_HEIGHT=30
+mpl.use("module://mpl_ascii")
 
 pr = cProfile.Profile()
 
@@ -37,7 +43,7 @@ def plot(prefix):
 
     data = dict(sorted(data.items(), key=lambda x: x[0]))
 
-    profiles = list(k[1] for k in data.keys())
+    profiles = list(k[0] for k in data.keys())
     values = list(data.values())
 
     fig = plt.figure(figsize = (10, 5))
@@ -46,11 +52,11 @@ def plot(prefix):
     plt.bar(profiles, values, color ='maroon', 
             width = 0.4)
 
-    plt.xlabel("Profile")
-    plt.ylabel("Runtime (s)")
-    plt.xticks(rotation=90)
-    plt.tight_layout()
-    plt.savefig(f'assets/profiles_{prefix}.png')
+    plt.xlabel(prefix)
+    plt.ylabel("Runtime")
+    # plt.xticks(rotation=90)
+    # plt.tight_layout()
+    plt.savefig(f'assets/profiles_{prefix}_plot.txt')
 
 
 plot("test")

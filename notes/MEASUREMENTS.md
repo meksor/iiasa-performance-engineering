@@ -1,10 +1,12 @@
-# Taking Measurements
+> SLIDE 6
 
-As with any other measurement, we have to keep a few basic things mind to ensure we can trust our results. We have to create a "sterile" environment for ourselves as best we can.
+# Measurements & Profiling
 
-In a best case scenario we would be using a remote server in a datacenter somewhere.
+As with any other measurement, we have to keep a few basic things mind to ensure we can trust our results. We have to create a "sterile" environment for ourselves as best we can and keep our measurment mechanism in mind.
 
-## Throttling
+## Common Error Sources
+
+### Throttling
 
 Semiconductors will increase in conductivity and eventually burn out the hotter they get. This means all long-running semi-conducting devices need some sort of negative feedback with every increase in temperature. Thermal throttling.
 
@@ -22,7 +24,7 @@ High-level system settings like the power profile will also impact your benchmar
 
 ![TT](/assets/power_profiles.png)
 
-## Measuring the Interpreter/Linker/JIT etc.
+### Measuring the Interpreter/Linker/JIT etc.
 
 Its tempting to write or compile a program and benchmark it directly from your shell:
 
@@ -46,11 +48,11 @@ poetry env use 3.13
 poetry install
 ```
 
-Something very useful howerver, is to see how much time the program has spent in the kernel ("system"). All the time used by sys-calls is listed on its own which might indicate performance problems connected to writing files, listening on the network and more.
+Something very useful however, is to see how much time the program has spent in the kernel ("system"). All the time used by sys-calls is listed on its own which might indicate performance problems connected to writing files, listening on the network and more.
 
-## Measuring Hard-To-Predict Noise
+### Measuring Hard-To-Predict Noise
 
-When measuring performance of a function that is too fast and running it only once, you might end up measuring a siginifcant error introduced by (for example) process scheduling in the operating system. Other overhead like GCs, file-systems, etc. might also play into this. As a rule of thumb: the more high-level your environment the more error will be introduced by these factors.
+When measuring performance of a program that is "too fast", you might end up measuring a siginifcant error introduced by (for example) process scheduling in the operating system. Other overhead like GCs, file-systems, etc. might also play into this. As a rule of thumb: the more high-level your environment the more error will be introduced by these factors.
 
 _This means benchmarking tests are pretty much /always/ slow unless you are using a [real-time operating system](https://en.wikipedia.org/wiki/Real-time_operating_system).
 Real-time scheduling features now exist in the vanilla [Linux](https://www.zdnet.com/article/20-years-later-real-time-linux-makes-it-to-the-kernel-really/)_.
@@ -81,13 +83,28 @@ Results measured beforehand on python 3.10. These are individual test runs.
 | test_python_too_fast     | 216.3560  | 216.3560  | 216.3560  | 0.0000 | 216.3560  | 0.0000 | 0;0      | 4.6220        | 1      | 1          |
 
 
-As you can see there are outliers that are close to 100% slower than the average runtime otherwise.
+As you can see there is an outlier that is close to 100% slower than the average runtime otherwise.
 Even worse: if you are not an expert on the scheduling algorithm of your operating system it is basically impossible to know or measure how big or how frequent the error will be.
 To fix this, most benchmarking libraries will automatically run benchmarks multiple times and present statistics of the result.
 
 ```bash
 pytest -k test_python_mm
 ```
+
+## Profilers
+
+To measure a programs performance characteristics beyond simple runtime statistics we need to employ special measurement programs called "profilers". A profiler will usually talk to or hook into a language's runtime to extract some information about the execution.
+
+Some profilers only measure function performance, which employs less overhead and is often good enough. Some others can insert instructions between each line in your program and measure more detailed information.
+**Keep in mind** that all of these techniques can incurr *significant* overhead, the worst of which come from memory profilers.
+
+![Profiler Comparison](/assets/profiler_comparison.png)
+
+Image taken from a [talk about the "scalene" sampling profiler](https://www.youtube.com/watch?v=5iEf-_7mM1k).
+
+
+A relatively novel approach is the "sampling profiler" which asks the runtime many times during a programs runtime about what is currently being executed. Its "stochastically" measuring so to say. I think. 
+"scalene" is one of these profilers.
 
 ## Summary
 
@@ -101,6 +118,8 @@ Consider ambient factors like room temperature, air conditioning and so on.
 
 Make sure your CPU is as idle as possible: close programs, log out other users, disable ssh server (actually dont do that if you are on a remote machine :D), etc...
 
-Run benchmarks multiple times and do statistics. Use a benchmarking framework/write your own. Consider your programming language.
+Run benchmarks multiple times and do statistics. Use a benchmarking framework/write your own.
+
+Consider your programming language and understand your profiler.
 
 Now that we have an enviroment for testing set up, we can start thinking about "Datastructures and Algorithms" and their [COMPLEXITY](COMPLEXITY.md).
