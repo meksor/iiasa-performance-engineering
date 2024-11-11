@@ -40,56 +40,51 @@ def quick_sort(
 @pytest.mark.parametrize(
     "list_", get_lists(None),
 )
-def test_tc_get_middle_item(benchmark, profiled, list_):
-    with profiled():
-        def bench():
-            return get_middle_item(list_)
-        result = benchmark(bench)
+def test_tc_get_middle_item(benchmark, list_):
+    def bench():
+        return get_middle_item(list_)
+    result = benchmark(bench)
 
     assert result == list_[len(list_) // 2]
 
 @pytest.mark.parametrize(
     "list_", get_lists(None),
 )
-def test_tc_sum_items(benchmark, profiled, list_):
-    with profiled():
-        def bench():
-            return sum_items(list_)
-        result = benchmark(bench)
+def test_tc_sum_items(benchmark, list_):
+    def bench():
+        return sum_items(list_)
+    result = benchmark(bench)
 
     assert result == sum(list_)
 
 @pytest.mark.parametrize(
     "list_", get_lists(None),
 )
-def test_tc_sum_builtin(benchmark, profiled, list_):
-    with profiled():
-        def bench():
-            return sum(list_)
-        result = benchmark(bench)
+def test_tc_sum_builtin(benchmark, list_):
+    def bench():
+        return sum(list_)
+    result = benchmark(bench)
 
     assert result == sum(list_)
 
 @pytest.mark.parametrize(
     "list_", get_lists(None),
 )
-def test_tc_quick_sort(benchmark, profiled, list_):
+def test_tc_quick_sort(benchmark, list_):
     # need to copy the list since qs sorts in place
     subject = list_.copy()
-    with profiled():
-        def bench():
-            return quick_sort(subject)
-        benchmark(bench)
+    def bench():
+        return quick_sort(subject)
+    benchmark(bench)
 
     assert subject == sorted(list_)
 
 @pytest.mark.parametrize(
     "list_", get_lists(None),
 )
-def test_tc_sorted_builtin(benchmark, profiled, list_):
-    with profiled():
-        def bench():
-            return sorted(list_)
-        result = benchmark(bench)
+def test_tc_sorted_builtin(benchmark, list_):
+    def bench():
+        return sorted(list_)
+    result = benchmark(bench)
 
     assert result == sorted(list_)

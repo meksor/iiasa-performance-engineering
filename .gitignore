@@ -3,3 +3,5 @@
 .profiles
 .memray
 __pycache__/
+.benchmarks/
+/*.svg

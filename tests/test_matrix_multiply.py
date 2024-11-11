@@ -4,7 +4,6 @@ import numpy as np
 import numpy.typing as npt
 import numpy.testing as nptest
 
-
 def multiply_matrix_python(A: npt.NDArray, B: npt.NDArray):
     a_rows, a_cols = A.shape
     b_rows, b_cols = B.shape
@@ -34,13 +33,32 @@ def test_python_too_fast(benchmark, profiled):
     [
         (MATRICES["A10"], MATRICES["B10"], MATRICES["R10"]),
         (MATRICES["A20"], MATRICES["B20"], MATRICES["R20"]),
-        (MATRICES["A30"], MATRICES["B30"], MATRICES["R30"])
+        (MATRICES["A30"], MATRICES["B30"], MATRICES["R30"]),
+        (MATRICES["A40"], MATRICES["B40"], MATRICES["R40"]),
+        (MATRICES["A50"], MATRICES["B50"], MATRICES["R50"])
     ],
 )
-def test_python_mm(benchmark, profiled, A, B, R):
+def test_python_mm(benchmark, A, B, R):
+    def bench():
+        return multiply_matrix_python(A, B)
+    result = benchmark(bench)
+
+    nptest.assert_allclose(result, R)
+
+
+
+@pytest.mark.parametrize(
+    "A,B,R",
+    [
+        (MATRICES["A10"], MATRICES["B10"], MATRICES["R10"]),
+        (MATRICES["A20"], MATRICES["B20"], MATRICES["R20"]),
+        (MATRICES["A30"], MATRICES["B30"], MATRICES["R30"]),
+        (MATRICES["A40"], MATRICES["B40"], MATRICES["R40"]),
+        (MATRICES["A50"], MATRICES["B50"], MATRICES["R50"])
+    ],
+)
+def test_python_mm_profiled(benchmark, profiled, A, B, R):
     with profiled():
-        def bench():
-            return multiply_matrix_python(A, B)
-        result = benchmark(bench)
+        result = multiply_matrix_python(A, B)
 
     nptest.assert_allclose(result, R)

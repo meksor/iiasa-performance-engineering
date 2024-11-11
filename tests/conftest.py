@@ -39,14 +39,15 @@ def profiled(request):
 
 MATRICES = {}
 
-for msize in ["10", "20", "30", "100", "200", "300", "1000"]:
+for msize in ["10", "20", "30", "40", "50", "100", "200", "300", "1000"]:
     for v in ["A", "B", "R"]:
         df = pl.read_csv(data / v/  f"{msize}.csv")
-        MATRICES[v+msize] = df
+        MATRICES[v+msize] = df.to_numpy()
 
 LISTS = {}
 
-for lsize in [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500]:
+np.random.seed(1)
+for lsize in [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]: # , 1100, 1200, 1300, 1400, 1500]:
     LISTS[lsize] = np.random.randint(0, 1000, lsize).tolist()
 
 def get_lists(sizes: list[int] | None):

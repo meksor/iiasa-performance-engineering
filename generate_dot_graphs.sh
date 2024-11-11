@@ -4,6 +4,6 @@
 # thou must execute "sudo apt install graphviz".
 
 for filename in .profiles/*.prof; do
-    gprof2dot -f pstats $filename | dot -Tpng -o $filename.png && eog $filename.png
+    gprof2dot -f pstats $filename | dot -Tpng -o $filename.png
 done
 
