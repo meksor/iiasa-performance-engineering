@@ -2,7 +2,7 @@ from multiprocessing.pool import Pool
 from multiprocessing.dummy import Pool as ThreadPool
 import sys
 import numpy as np
-
+import requests
 import pytest
 
 @pytest.mark.xfail(strict=False)
@@ -31,6 +31,7 @@ def test_factorial_st(benchmark):
 
 
 def test_factorial_mt(benchmark):
+    # import threading
     pool = ThreadPool(8)
     def bench():
         return pool.map(factorial, factorial_inputs)
@@ -38,6 +39,7 @@ def test_factorial_mt(benchmark):
     benchmark(bench)
 
 def test_factorial_mp(benchmark):
+    # import multiprocessing
     pool = Pool(8)
     def bench():
         return pool.map(factorial, factorial_inputs)
@@ -81,3 +83,26 @@ def test_apply_gain_mp(benchmark):
     
     benchmark(bench)
 
+urls = ["https://www.google.com/"] * 10
+
+def test_request_st(benchmark):
+    def bench():
+        results = []
+        for url in urls:
+            results.append(requests.get(url))
+    
+    benchmark(bench)
+
+def test_request_mt(benchmark):
+    pool = ThreadPool(8)
+    def bench():
+        return pool.map(requests.get, urls)
+    
+    results = benchmark(bench)
+
+def test_request_mp(benchmark):
+    pool = Pool(8)
+    def bench():
+        return pool.map(requests.get, urls)
+    
+    results = benchmark(bench)

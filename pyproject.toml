@@ -20,6 +20,7 @@ memray = "^1.14.0"
 pytest-memray = "^1.7.0"
 mpl-ascii = "^0.10.0"
 smack = {git = "ssh://git@github.com/meksor/smack", rev = "main"}
+requests = "^2.32.3"
 
 
 [build-system]
