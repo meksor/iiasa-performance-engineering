@@ -55,6 +55,7 @@ COST AND SCALING:
 
 SOFTWARE:
 - Our entire software stack influences our performance
+- user space
 - python is slow, has caveats
 - we can measure this: errors as examples
 - `time` and unwanted overhead
