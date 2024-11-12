@@ -79,12 +79,13 @@ But next...
 
 now that we have calibrated our setup and gained perspective, we can go into a more theorethical direction:
 
-#### COMPLEXITY:
+#### COMPLEXITY: (SHOW PLOTS AND COMPARE)
 - time and space (only time today)
 - matrix multiplication example test output
 - explain output
 - explain code
 - what is "n"?? the size of **one side** of the matrix
+(SHOW PLOTS AND COMPARE)
 - hot areas
 
 - more examples: (SHOW PLOTS AND COMPARE)

@@ -88,3 +88,15 @@ def test_tc_sorted_builtin(benchmark, list_):
     result = benchmark(bench)
 
     assert result == sorted(list_)
+
+
+@pytest.mark.parametrize(
+    "list_", get_lists(None),
+)
+def test_tc_quick_sort_profile(profiled, list_):
+    subject = list_.copy()
+    
+    with profiled():
+        quick_sort(subject)
+
+    assert subject == sorted(list_)
