@@ -11,7 +11,7 @@
 
 ### Outline 
 
-INTRO:
+#### INTRO:
  - Welcome, Introduction
  - High-level Focus
  - Python
@@ -19,41 +19,41 @@ INTRO:
 
 -- First perspective:
 
-MECHANICAL ASSEMBLY:
+#### MECHANICAL ASSEMBLY:
  - A computer is a machine
  - Environment
  - Throttling
 
 We can also be throttled by our
 
-BUSSES:
+#### BUSSES:
 - A computer is a complicated Bus system
 - We need to keep that in mind because busses might be bottlenecks
 
 We can look at the CPU in detail:
 
-CPU:
+#### CPU:
  - We should already know about the CPU
  - Multicore
  - CPU-Bound
 
 When we finished computing, we can send the results via a:
 
-NETWORK:
+#### NETWORK:
  - Our computer as a network node
  - Networks/IO are slow
  - I/O-Bound
 
 But next...
 
-COST AND SCALING:
+#### COST AND SCALING:
 - Components and Power cost Money
 - There a fundamental truths and tradeoffs: RAM vs CPU
 - Hence: caching
 - Alternate Universe
 
 
-SOFTWARE:
+#### SOFTWARE:
 - Our entire software stack influences our performance
 - user space
 - python is slow, has caveats
@@ -79,7 +79,7 @@ SOFTWARE:
 
 now that we have calibrated our setup and gained perspective, we can go into a more theorethical direction:
 
-COMPLEXITY:
+#### COMPLEXITY:
 - time and space (only time today)
 - matrix multiplication example test output
 - explain output
@@ -100,7 +100,7 @@ COMPLEXITY:
 
 - how do we find "hot areas"?
 
-PROFILERS:
+#### PROFILERS:
  - special programs to measure beyond simple timing
  - types of profilers
  - profiler benchmarks, overhead, 
@@ -115,7 +115,7 @@ PROFILERS:
 
 now that we can take a closer look, some examples:
 
-EXAMPLES:
+#### EXAMPLES:
 
 - numpy vs polar access, snakeviz demo
 - measuring the GIL
